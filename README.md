@@ -13,65 +13,92 @@ cd downloads
 
 ## Step 2 - Download Apache Nifi
 
-Check the latest version on [https://www.anaconda.com/distribution/](https://www.anaconda.com/distribution/) before running the code. If there is a newer release you can change the download link.
+Check the latest version on [https://nifi.apache.org/download.html](https://nifi.apache.org/download.html) before running the code. If there is a newer release you can change the download link.
 
 ```
-wget https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
+wget https://dlcdn.apache.org/nifi/1.15.0/nifi-1.15.0-bin.tar.gz
 ```
 
-## Step 3 - Edit File Permissions
+## Step 3 - Extract & Move Nifi Files&#x20;
 
-You need to give execute permission to the users, to be able to run the Anaconda3-xxx-xxx.sh file.
-
-```
-sudo chmod +x Anaconda3-2021.05-Linux-x86_64.sh
-```
-
-You also need to change the owner of the directory you select for anaconda installation. (or you can give permission to your user on this directory). The selected directory is "/data" for our case.
+You need to extract files from the tar file you have downloaded.
 
 ```
-sudo chown -R ozgunakn:ozgunakn /data
+sudo tar -zxvf nifi-1.15.0-bin.tar.gz
 ```
 
-## Step 4 - Run Anaconda.sh (Installing)
-
-Go to the download directory and run Anaconda-xxx-xxx.sh file.
+You can move extracted files to the Nifi installation directory which you select (/opt for me).
 
 ```
-cd downloads
-./Anaconda3-2021.05-Linux-x86_64.sh
+sudo mv nifi-1.15.0 /opt/
 ```
 
-* It will suggest you an installing directory, you can change it. In our case, I typed "/data/anaconda3" as installing directory.
-* After installation, it will ask you, whether you want to run initialize or not. You can type YES.
+## Step 4 - Configure Nifi Properties
 
-You need to source .bashrc file after installation.
-
-```
-cd
-source .bashrc
-```
-
-If the base conda environment automatically is opened, you are good to go! If it is not you can repeat the steps above.
-
-## Step 5 - Activate Conda Forge
-
-It is important to activate conda-forge to be able to install additional packages.
+Go to the installation Nifi directory and reach into the config files.
 
 ```
-conda config --add channels conda-forge
+cd /opt/nifi-1.15.0 
+cd conf
 ```
 
-## Hint!
-
-You can search packages and versions on anaconda using the code below
+Edit nifi.properties file by changing the web host (to be able to reach Nifi UI from a remote server) and theport (optional).
 
 ```
-conda search airflow
+sudo nano nifi.properties
 ```
 
-After installation anaconda base environment will be automatically activated for each session of your user. To disable automatic activation;
+Edit the following lines and save the file.
 
-```bash
-conda config --set auto_activate_base fal
+> nifi.remote.input.secure=false      #should be false
+>
+>
+>
+> nifi.web.http.host=10.115.209.128 #the ip address of the host.
+>
+> nifi.web.http.port=7070 #port.
+>
+>
+>
+> nifi.web.https.host=                   #should be empty
+>
+> nifi.web.https.port=                   #should be empty
+
+## Step 5 - Install Nifi Service
+
+You need to install Nifi service to make easier the management of the Nifi as a service.
+
 ```
+cd /opt/nifi-1.15.0
+sudo ./bin/nifi.sh install
+```
+
+System daemon should be restarted to be able to start nifi using nifi service.
+
+```
+sudo systemctl daemon-reload
+```
+
+## Step 6 - Start Nifi Service
+
+Start Nifi using Nifi service.
+
+```
+sudo service nifi start
+```
+
+Check the status of the service.
+
+```
+sudo service nifi status
+```
+
+The output should be like the following;
+
+![](<.gitbook/assets/image (2).png>)
+
+## Step 7 - Connect Nifi UI
+
+Open your browser and type "your-ip-address:7070"
+
+![](<.gitbook/assets/image (1).png>)
