@@ -2,7 +2,9 @@
 
 This is a guide for Apache Nifi installation on Ubuntu 20.04
 
-## Step 1 - Create a Download Repository
+## Step 1 - Prepare the Environment
+
+Install java11 - You can follow this guideline to install java ([https://github.com/ozgunakin/java-installation-on-ubuntu20.04](https://github.com/ozgunakin/java-installation-on-ubuntu20.04))
 
 Create a download repository to save the Anaconda installer.
 
