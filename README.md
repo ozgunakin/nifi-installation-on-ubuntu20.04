@@ -66,6 +66,18 @@ Edit the following lines and save the file.
 >
 > nifi.web.https.port=                   #should be empty
 
+**NOTE:** If you are installing 1.15.3 you need to remove the values of the following lines. !!!
+
+> ```java
+> nifi.security.keystore= 
+> nifi.security.keystoreType= 
+> nifi.security.keystorePasswd= 
+> nifi.security.keyPasswd= 
+> nifi.security.truststore= 
+> nifi.security.truststoreType= 
+> nifi.security.truststorePasswd=
+> ```
+
 ## Step 5 - Install Nifi Service
 
 You need to install Nifi service to make easier the management of the Nifi as a service.
