@@ -18,7 +18,7 @@ cd downloads
 Check the latest version on [https://nifi.apache.org/download.html](https://nifi.apache.org/download.html) before running the code. If there is a newer release you can change the download link.
 
 ```
-wget https://dlcdn.apache.org/nifi/1.15.0/nifi-1.15.0-bin.tar.gz
+wget https://archive.apache.org/dist/nifi/1.15.0/nifi-1.15.0-bin.tar.gz
 ```
 
 ## Step 3 - Extract & Move Nifi Files&#x20;
